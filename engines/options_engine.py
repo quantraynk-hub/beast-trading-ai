@@ -4,16 +4,17 @@ def calculate_pcr(option_data):
     if option_data is None:
         return None
 
-    # API returned unexpected type
+    # ensure dictionary
     if not isinstance(option_data, dict):
         return None
 
-    # Missing keys
     records = option_data.get("records")
+
     if not records:
         return None
 
     data = records.get("data")
+
     if not data:
         return None
 
@@ -32,6 +33,4 @@ def calculate_pcr(option_data):
     if total_call == 0:
         return None
 
-    pcr = total_put / total_call
-
-    return round(pcr, 3)
+    return round(total_put / total_call, 3)
