@@ -1,20 +1,21 @@
 import requests
 
+session = requests.Session()
+
 headers = {
     "User-Agent": "Mozilla/5.0",
     "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br"
 }
 
-session = requests.Session()
 session.headers.update(headers)
+
 
 def get_nifty_price():
 
     try:
         url = "https://www.nseindia.com/api/allIndices"
-
         r = session.get(url)
-
         data = r.json()
 
         for item in data["data"]:
@@ -28,6 +29,9 @@ def get_nifty_price():
 def get_option_chain():
 
     try:
+        # first request generates cookies
+        session.get("https://www.nseindia.com")
+
         url = "https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY"
 
         r = session.get(url)
