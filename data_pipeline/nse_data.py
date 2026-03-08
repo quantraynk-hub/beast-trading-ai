@@ -1,24 +1,38 @@
 import requests
 
-headers = {"User-Agent": "Mozilla/5.0"}
+headers = {
+    "User-Agent": "Mozilla/5.0",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+session = requests.Session()
+session.headers.update(headers)
 
 def get_nifty_price():
 
-    url = "https://www.nseindia.com/api/allIndices"
+    try:
+        url = "https://www.nseindia.com/api/allIndices"
 
-    r = requests.get(url, headers=headers)
+        r = session.get(url)
 
-    data = r.json()
+        data = r.json()
 
-    for item in data["data"]:
-        if item["index"] == "NIFTY 50":
-            return item["last"]
+        for item in data["data"]:
+            if item["index"] == "NIFTY 50":
+                return item["last"]
+
+    except:
+        return None
 
 
 def get_option_chain():
 
-    url = "https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY"
+    try:
+        url = "https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY"
 
-    r = requests.get(url, headers=headers)
+        r = session.get(url)
 
-    return r.json()
+        return r.json()
+
+    except:
+        return None
