@@ -15,6 +15,12 @@ option_data = get_option_chain()
 
 pcr = calculate_pcr(option_data)
 
-st.metric("NIFTY Price", price)
+if price is not None:
+    st.metric("NIFTY Price", price)
+else:
+    st.write("NIFTY price unavailable")
 
-st.write("Put Call Ratio:", pcr)
+if pcr is not None:
+    st.write("Put Call Ratio:", pcr)
+else:
+    st.write("PCR unavailable (NSE API blocked or unavailable)")
