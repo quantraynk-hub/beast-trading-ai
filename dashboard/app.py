@@ -10,17 +10,16 @@ from engines.options_engine import calculate_pcr
 st.title("Beast Trading AI")
 
 price = get_nifty_price()
-
 option_data = get_option_chain()
 
 pcr = calculate_pcr(option_data)
 
-if price is not None:
+if price:
     st.metric("NIFTY Price", price)
 else:
-    st.write("NIFTY price unavailable")
+    st.warning("NIFTY price unavailable")
 
-if pcr is not None:
-    st.write("Put Call Ratio:", pcr)
+if pcr:
+    st.metric("PCR", pcr)
 else:
-    st.write("PCR unavailable (NSE API blocked or unavailable)")
+    st.warning("PCR unavailable (NSE blocked request)")
