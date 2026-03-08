@@ -1,6 +1,11 @@
 def calculate_pcr(option_data):
 
+    # Case 1: API failed
     if option_data is None:
+        return None
+
+    # Case 2: unexpected response
+    if not isinstance(option_data, dict):
         return None
 
     if "records" not in option_data:
@@ -16,8 +21,8 @@ def calculate_pcr(option_data):
 
         if "CE" in item and "PE" in item:
 
-            total_call += item["CE"]["openInterest"]
-            total_put += item["PE"]["openInterest"]
+            total_call += item["CE"].get("openInterest", 0)
+            total_put += item["PE"].get("openInterest", 0)
 
     if total_call == 0:
         return None
