@@ -11,16 +11,17 @@ st.title("Beast Trading AI")
 
 price = get_nifty_price()
 option_data = get_option_chain()
+
 pcr = calculate_pcr(option_data)
 
 st.subheader("Market Data")
 
-if price:
+if price is not None:
     st.metric("NIFTY Price", price)
 else:
     st.warning("NIFTY price unavailable")
 
-if pcr:
+if pcr is not None:
     st.metric("Put Call Ratio", pcr)
 else:
     st.warning("PCR unavailable (NSE blocked request)")
