@@ -1,4 +1,8 @@
 import streamlit as st
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from data_pipeline.nse_data import get_nifty_price, get_option_chain
 from engines.options_engine import calculate_pcr
